@@ -258,8 +258,8 @@ export function originStrands(
 ): { k: YarnGeometry; r: YarnGeometry; joined: YarnGeometry; joinPoint: Point } {
   // Keep both strands comfortably on screen, however narrow the phone is.
   const spread = Math.max(
-    26,
-    Math.min(clamp(width * 0.17, 54, 190), target.x - 16, width - target.x - 16),
+    24,
+    Math.min(clamp(width * 0.17, 54, 190), target.x - 28, width - target.x - 28),
   );
   const join: Point = { x: target.x, y: target.y - clamp(height * 0.3, 60, 130) };
 

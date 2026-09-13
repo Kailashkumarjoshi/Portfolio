@@ -66,6 +66,11 @@ export function MusicProvider({
     audio.preload = 'metadata';
     audio.loop = false;
     audio.volume = 0;
+    // Kept in the document (hidden) rather than detached: browsers treat an
+    // attached element more kindly for background playback and media keys.
+    audio.hidden = true;
+    audio.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(audio);
     audioRef.current = audio;
 
     const onPlay = () => {
@@ -119,7 +124,8 @@ export function MusicProvider({
       audio.removeEventListener('ended', onEnded);
       audio.removeEventListener('error', onError);
       audio.pause();
-      audio.src = '';
+      audio.removeAttribute('src');
+      audio.remove();
       if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
     };
   }, []);

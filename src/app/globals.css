@@ -83,8 +83,9 @@ body {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(38% 26% at 22% 26%, rgba(var(--candle), 0.13) 0%, transparent 70%),
-    radial-gradient(32% 22% at 80% 62%, rgba(var(--glow-rose), 0.12) 0%, transparent 72%);
+    radial-gradient(38% 26% at 22% 26%, rgba(var(--candle), 0.16) 0%, transparent 70%),
+    radial-gradient(34% 24% at 80% 62%, rgba(var(--glow-rose), 0.15) 0%, transparent 72%),
+    radial-gradient(55% 32% at 50% 38%, rgba(var(--glow-plum), 0.22) 0%, transparent 75%);
   animation: candle-breathe 14s ease-in-out infinite;
 }
 
