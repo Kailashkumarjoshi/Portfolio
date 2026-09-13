@@ -1,0 +1,417 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   K & R — romantic luxury design tokens
+   ========================================================================== */
+
+:root {
+  --ground-0: #0d0609;
+  --ground-1: #170b13;
+  --ground-2: #241120;
+  --candle: 227 201 160;   /* champagne */
+  --glow-rose: 196 129 143;
+  --glow-plum: 107 58 86;
+
+  --paper: #fbf5ee;
+  --paper-edge: #e8d9c6;
+  --ink: #2a1b22;
+  --ink-soft: #5c4550;
+
+  --yarn-core: #c4818f;
+  --yarn-shade: #8e5566;
+  --yarn-light: #eec4c6;
+
+  --rail: 4rem;   /* distance from the viewport edge to the yarn rail on phones */
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Stops iOS from inflating body copy in landscape. */
+  -webkit-text-size-adjust: 100%;
+  /* `clip` rather than `hidden`: it trims the glow that bleeds past a card
+     without turning the page into a scroll container, which would break every
+     `position: sticky` inside it. */
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--ground-0);
+  color: #f3e9dd;
+  font-family: var(--font-body-serif), Georgia, serif;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(196, 129, 143, 0.35);
+  color: #fbf5ee;
+}
+
+/* --- Focus: visible, but in the romantic palette ------------------------- */
+:focus-visible {
+  outline: 2px solid rgba(227, 201, 160, 0.9);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Layer 1 — the warm evening ground
+   ========================================================================== */
+
+.romantic-ground {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(120% 80% at 12% -5%, rgba(124, 39, 67, 0.42) 0%, transparent 58%),
+    radial-gradient(95% 65% at 88% 8%, rgba(107, 58, 86, 0.40) 0%, transparent 60%),
+    radial-gradient(130% 90% at 50% 108%, rgba(58, 15, 29, 0.55) 0%, transparent 62%),
+    linear-gradient(178deg, var(--ground-1) 0%, var(--ground-0) 45%, #120810 100%);
+}
+
+/* Candlelight — two slow, offset warm pools. */
+.romantic-candle {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 26% at 22% 26%, rgba(var(--candle), 0.16) 0%, transparent 70%),
+    radial-gradient(34% 24% at 80% 62%, rgba(var(--glow-rose), 0.15) 0%, transparent 72%),
+    radial-gradient(55% 32% at 50% 38%, rgba(var(--glow-plum), 0.22) 0%, transparent 75%);
+  animation: candle-breathe 14s ease-in-out infinite;
+}
+
+@keyframes candle-breathe {
+  0%, 100% { opacity: 0.72; }
+  50%      { opacity: 1; }
+}
+
+/* Film grain — keeps the gradients from banding and adds the keepsake feel. */
+.romantic-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.font-display { font-family: var(--font-display), Georgia, serif; }
+
+.display-xl {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 0.95;
+  font-size: clamp(3rem, 12vw, 8.5rem);
+}
+
+.display-lg {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  line-height: 1.04;
+  font-size: clamp(2rem, 6.2vw, 4rem);
+}
+
+.kicker {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  font-size: clamp(0.6rem, 1.7vw, 0.72rem);
+  font-weight: 500;
+}
+
+.monogram {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.22em;
+  font-weight: 300;
+}
+
+/* Champagne foil text — used sparingly, on the monogram and key numerals. */
+.foil {
+  background: linear-gradient(
+    100deg,
+    #c8a877 0%, #f0e0c4 22%, #e3c9a0 40%,
+    #fff6e4 52%, #e3c9a0 64%, #c8a877 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -120% 0; }
+  100% { background-position: 220% 0; }
+}
+
+.prose-memory p {
+  margin-bottom: 1.05em;
+  line-height: 1.78;
+}
+.prose-memory p:last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   Keepsake surfaces
+   ========================================================================== */
+
+/* Warm ivory card that reads as printed paper, not a UI panel. */
+.paper {
+  background:
+    linear-gradient(168deg, #fdf9f4 0%, var(--paper) 38%, #f4ebdf 100%);
+  color: var(--ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(139, 110, 92, 0.14),
+    0 1px 1px rgba(20, 10, 18, 0.3),
+    0 14px 30px -14px rgba(20, 10, 18, 0.62),
+    0 40px 70px -35px rgba(58, 15, 29, 0.55);
+}
+
+/* Fibre texture on the paper — very low contrast, felt more than seen. */
+.paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23p)' opacity='.28'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Frosted romantic glass — used only for controls, never for memories. */
+.frost {
+  background: linear-gradient(160deg, rgba(60, 30, 48, 0.62), rgba(30, 14, 26, 0.72));
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  border: 1px solid rgba(227, 201, 160, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 40px -22px rgba(0, 0, 0, 0.85);
+}
+
+/* Matte photo frame — the inner bevel sells the "printed and mounted" read. */
+.matte {
+  position: relative;
+  overflow: hidden;
+  background: #1b0e17;
+}
+.matte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 0 34px rgba(26, 12, 20, 0.5);
+}
+
+/* Warm photographic grade — pulls stock-looking photos into the palette. */
+.warm-grade {
+  filter: saturate(0.92) contrast(1.03) sepia(0.12) brightness(1.01);
+}
+
+.hairline {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(227, 201, 160, 0.38) 20%,
+    rgba(227, 201, 160, 0.5) 50%,
+    rgba(227, 201, 160, 0.38) 80%,
+    transparent
+  );
+}
+
+/* ==========================================================================
+   Controls
+   ========================================================================== */
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2a1b22;
+  background: linear-gradient(140deg, #f0e0c4 0%, #e3c9a0 45%, #d0ad7c 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 10px 28px -12px rgba(227, 201, 160, 0.65),
+    0 2px 6px rgba(20, 10, 18, 0.4);
+  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.4s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 18px 40px -14px rgba(227, 201, 160, 0.75),
+    0 3px 8px rgba(20, 10, 18, 0.45);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: #e6d5df;
+  border: 1px solid rgba(227, 201, 160, 0.26);
+  background: rgba(45, 22, 38, 0.45);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.btn-ghost:hover {
+  background: rgba(66, 33, 54, 0.65);
+  border-color: rgba(227, 201, 160, 0.5);
+  color: #fbf5ee;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  border: 1px solid rgba(227, 201, 160, 0.2);
+  background: rgba(40, 20, 33, 0.5);
+  color: #d2b6c5;
+  transition: all 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.chip:hover { border-color: rgba(227, 201, 160, 0.45); color: #f3e9dd; }
+.chip[data-active='true'] {
+  background: linear-gradient(140deg, rgba(240, 224, 196, 0.95), rgba(211, 178, 128, 0.9));
+  border-color: transparent;
+  color: #2a1b22;
+  font-weight: 500;
+}
+
+/* Admin form controls — legible, generous targets, same warm family. */
+.field {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 0.75rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #f6efe6;
+  background: rgba(23, 11, 19, 0.75);
+  border: 1px solid rgba(227, 201, 160, 0.2);
+  transition: border-color 0.25s, background 0.25s;
+}
+.field::placeholder { color: rgba(210, 182, 197, 0.45); }
+.field:focus {
+  border-color: rgba(227, 201, 160, 0.6);
+  background: rgba(33, 16, 27, 0.9);
+  outline: none;
+}
+textarea.field { min-height: 8rem; line-height: 1.7; resize: vertical; }
+select.field option { background: #1d0f18; color: #f6efe6; }
+
+.label {
+  display: block;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #bd9aae;
+  margin-bottom: 0.45rem;
+}
+
+.help {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(210, 182, 197, 0.75);
+  margin-top: 0.4rem;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.swipe-row {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1rem;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.swipe-row > * { scroll-snap-align: center; flex: 0 0 auto; }
+
+.depth { transform-style: preserve-3d; perspective: 1400px; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: #f0e0c4;
+  color: #2a1b22;
+}
+
+/* ==========================================================================
+   Reduced motion — the story still works, it just stops moving
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .romantic-candle,
+  .foil {
+    animation: none !important;
+  }
+}
