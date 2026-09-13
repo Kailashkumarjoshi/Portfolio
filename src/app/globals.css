@@ -34,13 +34,17 @@ html {
   scroll-behavior: smooth;
   /* Stops iOS from inflating body copy in landscape. */
   -webkit-text-size-adjust: 100%;
+  /* `clip` rather than `hidden`: it trims the glow that bleeds past a card
+     without turning the page into a scroll container, which would break every
+     `position: sticky` inside it. */
+  overflow-x: clip;
 }
 
 body {
   background-color: var(--ground-0);
   color: #f3e9dd;
   font-family: var(--font-body-serif), Georgia, serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -85,14 +89,14 @@ body {
 }
 
 @keyframes candle-breathe {
-  0%, 100% { opacity: 0.75; transform: scale(1); }
-  50%      { opacity: 1;    transform: scale(1.04); }
+  0%, 100% { opacity: 0.72; }
+  50%      { opacity: 1; }
 }
 
 /* Film grain — keeps the gradients from banding and adds the keepsake feel. */
 .romantic-grain {
   position: fixed;
-  inset: -50%;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
   opacity: 0.4;

@@ -64,6 +64,8 @@ export function Timeline({ events, settings }: TimelineProps) {
 
   const open = openIndex !== null ? visible[openIndex] ?? null : null;
 
+  const closeDetail = useCallback(() => setOpenIndex(null), []);
+
   const navigate = useCallback(
     (direction: -1 | 1) => {
       setOpenIndex((current) => {
@@ -145,7 +147,7 @@ export function Timeline({ events, settings }: TimelineProps) {
       <MemoryDetail
         event={open}
         initials={settings.initials}
-        onClose={() => setOpenIndex(null)}
+        onClose={closeDetail}
         onNavigate={navigate}
         hasPrevious={openIndex !== null && openIndex > 0}
         hasNext={openIndex !== null && openIndex < visible.length - 1}

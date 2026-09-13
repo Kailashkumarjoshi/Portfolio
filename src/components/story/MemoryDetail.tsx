@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import type { StoryEvent } from '@/lib/types';
 import { moodTheme } from '@/lib/moods';
-import { formatEventDate } from '@/lib/utils';
+import { cn, formatEventDate } from '@/lib/utils';
 import { MediaFrame } from './MediaFrame';
 import { MoodBadge } from './MoodBadge';
 import { ReactionPair } from './ReactionPair';
@@ -33,21 +33,40 @@ export function MemoryDetail({
   const returnFocusTo = useRef<Element | null>(null);
   const { setSong, restoreGlobal } = useMusic();
 
-  // A memory with its own song takes over the room while it is open.
+  const isOpen = Boolean(event);
+
+  // A memory with its own song takes over the room while it is open, and the
+  // site's own song comes back when it closes. Both calls no-op if the right
+  // track is already playing, so navigating between memories does not restart it.
   useEffect(() => {
-    if (!event) return;
-    if (event.song?.url) setSong(event.song);
-    return () => restoreGlobal();
+    if (event?.song?.url) setSong(event.song);
+    else restoreGlobal();
   }, [event, setSong, restoreGlobal]);
 
+  // Locking the page is keyed on open/closed alone. Tying it to the memory
+  // would re-capture the already-locked overflow on every move to the next
+  // one, and leave the page stuck when the last one closed.
   useEffect(() => {
-    if (!event) return;
+    if (!isOpen) return;
 
     returnFocusTo.current = document.activeElement;
-    closeRef.current?.focus();
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      (returnFocusTo.current as HTMLElement | null)?.focus?.();
+    };
+  }, [isOpen]);
+
+  // Move focus to the close button each time a different memory is shown.
+  const openId = event?.id;
+  useEffect(() => {
+    if (openId) closeRef.current?.focus();
+  }, [openId]);
+
+  useEffect(() => {
+    if (!isOpen) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -75,16 +94,16 @@ export function MemoryDetail({
     };
 
     document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = previousOverflow;
-      (returnFocusTo.current as HTMLElement | null)?.focus?.();
-    };
-  }, [event, onClose, onNavigate, hasPrevious, hasNext]);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose, onNavigate, hasPrevious, hasNext]);
 
   const theme = moodTheme(event?.mood ?? null);
   const cover = event?.media[0];
   const rest = event?.media.slice(1) ?? [];
+
+  // The title is laid over the cover only when that cover is a still photo.
+  // Over a video it would sit exactly where the playback controls are.
+  const overlayTitle = cover?.kind === 'photo';
 
   return (
     <AnimatePresence>
@@ -120,19 +139,23 @@ export function MemoryDetail({
             <div className="frost overflow-hidden rounded-[1.75rem]">
               <header className="relative">
                 {cover && (
-                  <div className="relative aspect-[16/10] w-full sm:aspect-[16/8]">
-                    <MediaFrame
-                      item={cover}
-                      priority
-                      interactive
-                      sizes="(max-width: 1024px) 100vw, 928px"
-                      className="absolute inset-0 h-full w-full"
-                      rounded="rounded-none"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-midnight-900 via-midnight-900/55 to-transparent"
-                    />
+                  <div className="relative min-h-[16rem] w-full">
+                    <div className="relative aspect-[4/3] w-full sm:aspect-[16/8]">
+                      <MediaFrame
+                        item={cover}
+                        priority
+                        interactive
+                        sizes="(max-width: 1024px) 100vw, 928px"
+                        className="absolute inset-0 h-full w-full"
+                        rounded="rounded-none"
+                      />
+                    </div>
+
+                    {overlayTitle && (
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight-900 via-midnight-900/85 to-transparent px-5 pb-6 pt-20 sm:px-10 sm:pb-8 sm:pt-28">
+                        <TitleBlock event={event} theme={theme} />
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -148,39 +171,11 @@ export function MemoryDetail({
                   </svg>
                 </button>
 
-                <div className={cover ? 'relative -mt-16 px-5 pb-1 sm:-mt-24 sm:px-10' : 'px-5 pt-10 sm:px-10'}>
-                  <div className="mb-3 flex flex-wrap items-center gap-3">
-                    {(event.event_date || event.date_label) && (
-                      <span className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-champagne/80">
-                        {formatEventDate(event.event_date, event.date_label)}
-                      </span>
-                    )}
-                    {event.chapter && (
-                      <span className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-mauve-300">
-                        · {event.chapter}
-                      </span>
-                    )}
-                    <MoodBadge mood={event.mood} tone="dark" />
-                    {event.is_milestone && (
-                      <span className="font-sans text-[0.6rem] uppercase tracking-[0.2em] text-champagne-deep">
-                        ✦ Milestone
-                      </span>
-                    )}
+                {!overlayTitle && (
+                  <div className="px-5 pt-8 sm:px-10 sm:pt-10">
+                    <TitleBlock event={event} theme={theme} />
                   </div>
-
-                  <h2
-                    id="memory-detail-title"
-                    className="display-lg text-balance text-cream"
-                  >
-                    {event.title}
-                  </h2>
-
-                  {event.subtitle && (
-                    <p className="mt-2 font-serif text-lg italic text-mauve-200 sm:text-xl">
-                      {event.subtitle}
-                    </p>
-                  )}
-                </div>
+                )}
               </header>
 
               <div className="px-5 pb-10 pt-6 sm:px-10 sm:pb-14">
@@ -196,7 +191,10 @@ export function MemoryDetail({
                   <section className="mt-9" aria-label="More from this memory">
                     <hr className="hairline mb-7" />
                     {/* Swipeable on phones, a settled grid on larger screens. */}
-                    <div className="swipe-row no-scrollbar -mx-5 px-5 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0">
+                    <div className={cn(
+                        'swipe-row no-scrollbar -mx-5 px-5 sm:mx-0 sm:grid sm:gap-4 sm:overflow-visible sm:px-0',
+                        rest.length > 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-1',
+                      )}>
                       {rest.map((item) => (
                         <figure
                           key={item.id}
@@ -269,5 +267,51 @@ export function MemoryDetail({
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+
+/** Date, chapter, mood, title and subtitle — the same set wherever it sits. */
+function TitleBlock({
+  event,
+  theme,
+}: {
+  event: StoryEvent;
+  theme: ReturnType<typeof moodTheme>;
+}) {
+  return (
+    <>
+      <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+        {(event.event_date || event.date_label) && (
+          <span className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-champagne/85">
+            {formatEventDate(event.event_date, event.date_label)}
+          </span>
+        )}
+        {event.chapter && (
+          <span className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-mauve-200">
+            · {event.chapter}
+          </span>
+        )}
+        <MoodBadge mood={event.mood} tone="dark" />
+        {event.is_milestone && (
+          <span
+            className="font-sans text-[0.6rem] uppercase tracking-[0.2em]"
+            style={{ color: theme.accent }}
+          >
+            ✦ Milestone
+          </span>
+        )}
+      </div>
+
+      <h2 id="memory-detail-title" className="display-lg text-balance text-cream">
+        {event.title}
+      </h2>
+
+      {event.subtitle && (
+        <p className="mt-2 font-serif text-lg italic text-mauve-200 sm:text-xl">
+          {event.subtitle}
+        </p>
+      )}
+    </>
   );
 }
