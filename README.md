@@ -32,6 +32,21 @@ exact stretch of the song that plays.
 
 ---
 
+## Two versions of this
+
+**`standalone/index.html`** — the whole site as one file. Double-click it and it
+works; drop it on any host and it is online. No accounts, no setup. You add
+memories by editing a clearly-marked list near the middle of the file. See
+`standalone/README.md`.
+
+**This project** — the same design and the same wool thread, plus an admin
+panel: you log in, fill in a form, drag memories into order, and never touch
+code. It needs a free Supabase account and the one-time setup below.
+
+Start wherever you like. They do not interfere with each other.
+
+---
+
 ## Part 1 — Setting it up (once)
 
 You need two free accounts: one for the database ([Supabase](https://supabase.com))
