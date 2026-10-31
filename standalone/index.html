@@ -22,7 +22,7 @@
   --paper:#fbf5ee; --ink:#2a1b22;
   --cream:#f3e9dd; --mauve:#bd9aae; --mauve-2:#d2b6c5;
   --champagne:#e3c9a0; --champagne-lt:#f0e0c4; --champagne-dp:#c8a877;
-  --rail:4rem;                 /* viewport edge → yarn rail, on phones */
+  --rail:3rem;                 /* viewport edge → yarn rail, on phones */
   --silk:cubic-bezier(.22,.61,.36,1);
 }
 
@@ -129,18 +129,19 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
 /* --- hero ----------------------------------------------------------------- */
-#hero{position:relative;min-height:88svh;display:flex;flex-direction:column;
+#hero{position:relative;min-height:74svh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;
-  padding:6rem 1.25rem 5rem;overflow:hidden}
+  padding:4.5rem 1.25rem 3.5rem;overflow:hidden}
+@media(min-height:900px){#hero{min-height:80svh}}
 #hero h1{margin:1.25rem 0 0;line-height:.95;letter-spacing:-.015em;
-  font-size:clamp(3rem,12vw,8.5rem);text-wrap:balance;
+  font-size:clamp(2.6rem,9.5vw,6.5rem);text-wrap:balance;
   background:linear-gradient(180deg,#f3e9dd,#f5e2e0 45%,#d2b6c5);
   -webkit-background-clip:text;background-clip:text;color:transparent}
-#hero .sub{margin:2rem 0 0;max-width:34rem;text-wrap:balance;
-  font-size:clamp(1rem,2.4vw,1.125rem);line-height:1.7;color:var(--mauve-2)}
-#hero .count{margin-top:1.75rem;font-family:'Inter',system-ui,sans-serif;
+#hero .sub{margin:1.5rem 0 0;max-width:32rem;text-wrap:balance;
+  font-size:clamp(.95rem,2.2vw,1.05rem);line-height:1.65;color:var(--mauve-2)}
+#hero .count{margin-top:1.25rem;font-family:'Inter',system-ui,sans-serif;
   font-size:.64rem;text-transform:uppercase;letter-spacing:.24em;color:rgba(189,154,174,.65)}
-#hero .cue{position:absolute;bottom:1.75rem;left:50%;transform:translateX(-50%);
+#hero .cue{position:absolute;bottom:1.1rem;left:50%;transform:translateX(-50%);
   width:1px;height:3rem;background:linear-gradient(180deg,transparent,rgba(227,201,160,.4),transparent)}
 .hero-fade{animation:riseIn 1.2s var(--silk) both}
 </style>
@@ -163,28 +164,46 @@ select.chip option{background:#1d0f18;color:#f6efe6}
   letter-spacing:.16em;color:rgba(227,201,160,.75);text-decoration:underline;text-underline-offset:4px}
 
 /* --- the story field ------------------------------------------------------ */
-#story{position:relative;padding:2.5rem 0 6rem}
-#fieldWrap{margin:3rem auto 0;width:100%;max-width:72rem;padding:0 1rem}
-#field{position:relative;padding-top:9rem}
+#story{position:relative;padding:2rem 0 5rem}
+#fieldWrap{margin:2.25rem auto 0;width:100%;max-width:70rem;padding:0 2.25rem 0 .85rem}
+@media(min-width:1280px){#fieldWrap{padding:0 1.5rem}}
+#field{position:relative;padding-top:7rem}
 #yarn{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
 #list{position:relative;z-index:1;list-style:none;margin:0;padding:0}
-#list>li{position:relative;margin-bottom:5rem}
-#list>li:last-child{margin-bottom:0}
+#list>li{position:relative}
+#list>li.memrow{margin-bottom:2.25rem}
+#list>li.memrow:last-child{margin-bottom:0}
+#list>li.chapterrow{margin:0 0 1.75rem}
 .cardslot{padding-left:var(--rail);padding-right:.25rem}
 
-@media(min-width:640px){#fieldWrap{padding:0 1.5rem}#field{padding-top:11rem}#list>li{margin-bottom:6rem}}
+@media(min-width:640px){
+  #fieldWrap{padding:0 4rem 0 1.5rem}
+  :root{--rail:4rem}
+  #field{padding-top:8.5rem}
+  #list>li.memrow{margin-bottom:2.75rem}
+}
+
+/* Desktop interleaves the two columns, so a screen holds two memories and the
+   thread's whole sweep between them is visible at once. The pull-up is always
+   less than half a card, so cards in the same column never meet. */
 @media(min-width:1024px){
-  #field{padding-top:13rem}
-  #list>li{display:grid;grid-template-columns:1fr 1fr;column-gap:6rem;margin-bottom:4rem}
+  #field{padding-top:8.5rem}
+  #list>li.memrow{display:grid;grid-template-columns:1fr 1fr;column-gap:5rem;
+    margin-bottom:-13rem}
+  #list>li.memrow:last-child{margin-bottom:0}
+  #list>li.chapterrow{display:grid;grid-template-columns:1fr 1fr;column-gap:5rem;
+    margin:2rem 0 .75rem;align-items:end}
+  #list>li.chapterrow:first-child{margin-top:0}
+  #list>li.chapterrow[data-side="right"] .chapter{grid-column:2}
   .cardslot{padding:0}
-  #list>li[data-side="right"] .cardslot{grid-column:2}
+  #list>li.memrow[data-side="right"] .cardslot{grid-column:2}
 }
 
 /* --- chapter heading ------------------------------------------------------ */
-.chapter{margin-bottom:3rem;padding-left:var(--rail)}
+.chapter{padding-left:var(--rail)}
 .chapter .kicker{color:rgba(227,201,160,.55)}
-.chapter h2{margin:.5rem 0 0;font-size:clamp(1.75rem,4vw,2.25rem);color:var(--cream)}
-@media(min-width:1024px){.chapter{grid-column:1/-1;padding-left:0;text-align:center;margin-bottom:4rem}}
+.chapter h2{margin:.35rem 0 0;font-size:clamp(1.45rem,3vw,1.85rem);color:var(--cream)}
+@media(min-width:1024px){.chapter{padding-left:0;text-align:left}}
 
 /* --- the memory, as a keepsake -------------------------------------------- */
 .memory{position:relative;opacity:0;transform:translateY(34px) scale(.975);
@@ -194,7 +213,7 @@ select.chip option{background:#1d0f18;color:#f6efe6}
   opacity:0;transition:opacity 1s}
 .memory.shown .wash{opacity:1}
 
-.card{position:relative;border-radius:1.25rem;padding:.9rem;color:var(--ink);
+.card{position:relative;border-radius:1.1rem;padding:.7rem;color:var(--ink);
   background:linear-gradient(168deg,#fdf9f4 0%,var(--paper) 38%,#f4ebdf 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(139,110,92,.14),
     0 1px 1px rgba(20,10,18,.3),0 14px 30px -14px rgba(20,10,18,.62),
@@ -204,10 +223,10 @@ select.chip option{background:#1d0f18;color:#f6efe6}
   opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23p)' opacity='.28'/%3E%3C/svg%3E")}
 .card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 2px 2px rgba(20,10,18,.3),
   0 22px 48px -14px rgba(20,10,18,.6),0 50px 90px -40px rgba(124,39,67,.55)}
-@media(min-width:640px){.card{padding:1rem}}
+@media(min-width:640px){.card{padding:.8rem}}
 
 .card .open{display:block;width:100%;text-align:left;padding:0}
-.frame{position:relative;margin-bottom:1rem;aspect-ratio:4/3;border-radius:.375rem;
+.frame{position:relative;margin-bottom:.8rem;aspect-ratio:3/2;border-radius:.375rem;
   overflow:hidden;background:#1b0e17}
 .frame img,.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   filter:saturate(.92) contrast(1.03) sepia(.12) brightness(1.01);
@@ -225,21 +244,23 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 .card:hover .play span{transform:scale(1.1)}
 
 .card .body{padding:0 .35rem}
-.meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.65rem}
+.meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.45rem}
 .ord{font-family:'Cormorant Garamond',Georgia,serif;font-size:.7rem;letter-spacing:.24em;color:rgba(42,27,34,.35)}
 .meta .line{flex:1;height:1px;background:rgba(42,27,34,.12)}
 .mile{font-family:'Inter',system-ui,sans-serif;font-size:.58rem;text-transform:uppercase;
   letter-spacing:.2em;color:var(--champagne-dp)}
-.when{margin:0 0 .4rem;font-family:'Inter',system-ui,sans-serif;font-size:.68rem;
+.when{margin:0 0 .3rem;font-family:'Inter',system-ui,sans-serif;font-size:.68rem;
   text-transform:uppercase;letter-spacing:.2em;color:rgba(42,27,34,.45)}
 .card h3{margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;
-  font-size:1.6rem;line-height:1.15;color:var(--ink)}
-@media(min-width:640px){.card h3{font-size:1.85rem}}
-.card .tag{margin:.4rem 0 0;font-style:italic;font-size:.95rem;line-height:1.35;color:rgba(42,27,34,.6)}
-.card .excerpt{margin:.8rem 0 0;font-size:.94rem;line-height:1.6;color:rgba(42,27,34,.72);
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;
-  margin-top:1rem;padding:.9rem .35rem 0;border-top:1px solid rgba(42,27,34,.1)}
+  font-size:1.4rem;line-height:1.15;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(min-width:640px){.card h3{font-size:1.6rem}}
+.card .tag{margin:.3rem 0 0;font-style:italic;font-size:.9rem;line-height:1.3;color:rgba(42,27,34,.6);
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.card .excerpt{margin:.55rem 0 0;font-size:.88rem;line-height:1.5;color:rgba(42,27,34,.7);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem;
+  margin-top:.7rem;padding:.65rem .35rem 0;border-top:1px solid rgba(42,27,34,.1)}
 .foot .left{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem}
 .openlink{font-family:'Inter',system-ui,sans-serif;font-size:.66rem;text-transform:uppercase;
   letter-spacing:.2em;color:rgba(42,27,34,.45);transition:color .3s}
@@ -264,8 +285,31 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 @media(min-width:1024px){.knot{width:2rem;height:2rem}
   .knot[data-dir="right"]{right:-1rem}.knot[data-dir="left"]{left:-1rem}}
 
+/* --- jump between memories without scrolling for them --------------------- */
+#rail{position:fixed;right:.9rem;top:50%;transform:translateY(-50%);z-index:35;
+  display:none;flex-direction:column;align-items:center;gap:.55rem;
+  padding:.7rem .45rem;border-radius:999px}
+#rail.show{display:flex}
+#rail button{position:relative;display:block;width:1.4rem;height:1.4rem;border-radius:999px}
+#rail button::after{content:"";position:absolute;left:50%;top:50%;width:.4rem;height:.4rem;
+  margin:-.2rem 0 0 -.2rem;border-radius:999px;background:rgba(210,182,197,.45);
+  transition:all .35s var(--silk)}
+#rail button:hover::after{background:var(--champagne);transform:scale(1.35)}
+#rail button[aria-current="true"]::after{background:var(--champagne-lt);
+  width:.55rem;height:.55rem;margin:-.275rem 0 0 -.275rem;
+  box-shadow:0 0 10px rgba(227,201,160,.8)}
+#rail .tip{position:absolute;right:1.9rem;top:50%;transform:translateY(-50%) translateX(.4rem);
+  padding:.3rem .65rem;border-radius:.5rem;white-space:nowrap;pointer-events:none;
+  font-family:'Inter',system-ui,sans-serif;font-size:.68rem;letter-spacing:.04em;
+  color:var(--cream);background:rgba(23,11,19,.92);border:1px solid rgba(227,201,160,.2);
+  opacity:0;transition:opacity .25s,transform .25s}
+#rail button:hover .tip,#rail button:focus-visible .tip{opacity:1;transform:translateY(-50%) translateX(0)}
+@media(min-width:768px){#rail{right:1.25rem;gap:.7rem}}
+@media(max-width:767px){#rail .tip{display:none}#rail{right:.3rem;padding:.55rem .2rem;gap:.3rem}
+  #rail button{width:1.5rem;height:1.5rem}}
+
 /* --- the thread runs off the bottom, it does not end ---------------------- */
-#tail{margin-top:4rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
+#tail{margin-top:2.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
 #tail p{margin:0;font-style:italic;font-size:.875rem;color:rgba(189,154,174,.7)}
 
 #empty{margin:5rem auto 0;max-width:28rem;padding:0 1.5rem;text-align:center;display:none}
@@ -341,19 +385,26 @@ footer p{margin:1.5rem auto 0;max-width:24rem;font-style:italic;font-size:.875re
 .bigreact .emo{font-size:1.5rem;line-height:1}
 
 /* --- music ---------------------------------------------------------------- */
-#player{position:fixed;left:50%;bottom:1rem;z-index:40;transform:translateX(-50%) translateY(1.5rem);
+/* On a phone the player shrinks to its two controls and tucks into the corner,
+   so it covers as little of a memory as a fixed control can. */
+#player{position:fixed;left:.75rem;bottom:.85rem;z-index:40;transform:translateY(1.5rem);
   opacity:0;pointer-events:none;transition:opacity .6s var(--silk),transform .6s var(--silk)}
-#player.show{opacity:1;pointer-events:auto;transform:translateX(-50%)}
-@media(min-width:640px){
-  #player{left:1.5rem;bottom:1.5rem;transform:translateY(1.5rem)}
-  #player.show{transform:none}
+#player.show{opacity:1;pointer-events:auto;transform:none}
+@media(max-width:639px){
+  #player .txt{display:none}
+  #player .pill{padding:.35rem;gap:.3rem}
 }
+@media(min-width:640px){#player{left:1.5rem;bottom:1.5rem}}
 #player .pill{display:flex;align-items:center;gap:.75rem;border-radius:999px;
   padding:.5rem 1rem .5rem .5rem;max-width:min(21rem,calc(100vw - 2rem))}
 #player .pp{position:relative;display:flex;flex:0 0 auto;width:2.75rem;height:2.75rem;
   align-items:center;justify-content:center;border-radius:999px;background:rgba(227,201,160,.12)}
 #player .pp:hover{background:rgba(227,201,160,.22)}
 #player .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+#player .ring circle.breathe{animation:ringBreathe 4.5s ease-in-out infinite,
+  ringTurn 14s linear infinite;transform-origin:50% 50%}
+@keyframes ringBreathe{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes ringTurn{to{transform:rotate(360deg)}}
 #player .txt{min-width:0;flex:1}
 #player .name{margin:0;font-style:italic;font-size:.86rem;color:var(--cream);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -406,10 +457,10 @@ footer p{margin:1.5rem auto 0;max-width:24rem;font-style:italic;font-size:.875re
         <span class="mono-rule r" aria-hidden="true"></span>
       </span>
     </div>
-    <p class="kicker hero-fade" id="heroKicker" style="margin:2.25rem 0 0;color:var(--mauve);animation-delay:.4s"></p>
+    <p class="kicker hero-fade" id="heroKicker" style="margin:1.6rem 0 0;color:var(--mauve);animation-delay:.4s"></p>
     <h1 class="hero-fade" id="heroTitle" style="animation-delay:.5s"></h1>
     <p class="sub hero-fade" id="heroSub" style="animation-delay:.75s"></p>
-    <a class="btn hero-fade" href="#story" id="heroBtn" style="margin-top:2.75rem;animation-delay:.95s"></a>
+    <a class="btn hero-fade" href="#story" id="heroBtn" style="margin-top:2rem;animation-delay:.95s"></a>
     <p class="count hero-fade" id="heroCount" style="animation-delay:1.15s"></p>
     <span class="cue hero-fade" aria-hidden="true" style="animation-delay:1.4s"></span>
   </header>
@@ -463,6 +514,8 @@ footer p{margin:1.5rem auto 0;max-width:24rem;font-style:italic;font-size:.875re
   </span>
   <p id="footNote"></p>
 </footer>
+
+<nav id="rail" class="frost" aria-label="Jump to a memory"></nav>
 
 <!-- one memory, opened -->
 <div id="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
@@ -534,7 +587,14 @@ const SETTINGS = {
   // "story" | "story-reverse" | "oldest" | "newest"
   defaultSort: "story",
 
-  // The song for the whole site. Leave url as "" for no music at all.
+  // MUSIC ------------------------------------------------------------------
+  // Out of the box the site plays its own soft romantic theme — written by the
+  // page as it goes, so it never loops and there is no file to find. Set
+  // builtIn to false for silence, or turn the volume down a little.
+  music: { builtIn: true, title: "Our Theme", volume: 0.5 },
+
+  // Prefer a song of your own? Put an .mp3 next to this file and name it here.
+  // It replaces the theme completely. Times are written like you say them.
   song: { url: "", title: "", artist: "", start: "0:00", end: "" }
 };
 
@@ -841,8 +901,8 @@ function yarnSegment(a, b, bow, seed, width){
 /* Two strands — one each — falling separately and twisting into the single
    thread that carries the rest of the story. Never explained in words. */
 function originStrands(target, width, height, cord){
-  const spread = Math.max(24, Math.min(clamp(width*0.17, 54, 190),
-                                       target.x - 28, width - target.x - 28));
+  const room = Math.min(target.x - 34, width - target.x - 34);
+  const spread = Math.max(10, Math.min(clamp(width*0.17, 54, 190), room));
   const join = { x: target.x, y: target.y - clamp(height*0.3, 60, 130) };
   const kS = { x: target.x - spread, y: 0 };
   const rS = { x: target.x + spread, y: 0 };
@@ -1098,12 +1158,14 @@ function renderList(){
     const head = chaptered && m.chapter && m.chapter !== (prev && prev.chapter)
       ? `<div class="chapter"><span class="kicker">Chapter</span><h2 class="display">${esc(m.chapter)}</h2></div>`
       : "";
-    return `<li data-side="left">${head}<div class="cardslot">${cardHTML(m, i)}</div></li>`;
+    return (head ? `<li class="chapterrow" data-side="left">${head}</li>` : "")
+         + `<li class="memrow" data-side="left"><div class="cardslot">${cardHTML(m, i)}</div></li>`;
   }).join("");
 
   state.revealed = REDUCED ? state.visible.length : -1;
   state.done.clear();
   layoutSides();
+  buildRail();
   observeCards();
   scheduleMeasure();
   showRevealed();
@@ -1112,11 +1174,13 @@ function renderList(){
 /* Which column each memory sits in, and therefore which way its thread leaves. */
 function layoutSides(){
   state.wide = innerWidth >= 1024;
-  $$("#list > li").forEach((li, i) => {
+  $$("#list > li.memrow").forEach((li, i) => {
     const side = state.wide ? (i % 2 === 0 ? "left" : "right") : "right";
     li.dataset.side = side;
     const knot = $(".knot", li);
     if (knot) knot.dataset.dir = side === "left" ? "right" : "left";
+    const head = li.previousElementSibling;
+    if (head && head.classList.contains("chapterrow")) head.dataset.side = side;
   });
 }
 
@@ -1305,6 +1369,49 @@ function observeCards(){
 }
 
 /* ==========================================================================
+   The jump rail — a story this long should not need scrolling to navigate
+   ========================================================================== */
+
+const rail = $("#rail");
+let railSpy = null;
+
+function buildRail(){
+  if (state.visible.length < 2){ rail.classList.remove("show"); rail.innerHTML = ""; return; }
+
+  rail.innerHTML = state.visible.map((m, i) => {
+    const when = niceDate(m.date, m.dateLabel);
+    return `<button type="button" data-jump="${i}" aria-label="Go to ${esc(m.title)}"
+      aria-current="false"><span class="tip">${esc(m.title)}${when ? ` &middot; ${esc(when)}` : ""}</span></button>`;
+  }).join("");
+  rail.classList.add("show");
+
+  if (railSpy) railSpy.disconnect();
+  // Whichever memory is nearest the middle of the screen is the current one.
+  railSpy = new IntersectionObserver(() => {
+    const mid = innerHeight / 2;
+    let best = 0, bestGap = Infinity;
+    $$(".memory", listEl).forEach(el => {
+      const r = el.getBoundingClientRect();
+      const gap = Math.abs(r.top + r.height/2 - mid);
+      if (gap < bestGap){ bestGap = gap; best = Number(el.dataset.i); }
+    });
+    $$("#rail button").forEach(b =>
+      b.setAttribute("aria-current", String(Number(b.dataset.jump) === best)));
+  }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: "-10% 0px -10% 0px" });
+  $$(".memory", listEl).forEach(el => railSpy.observe(el));
+}
+
+rail.addEventListener("click", e => {
+  const b = e.target.closest("[data-jump]");
+  if (!b) return;
+  const i = Number(b.dataset.jump);
+  // Jumping ahead should not leave the thread trailing behind the reader.
+  reveal(i);
+  const card = $$(".memory", listEl)[i];
+  if (card) card.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+});
+
+/* ==========================================================================
    One memory, opened
    ========================================================================== */
 
@@ -1446,7 +1553,205 @@ document.addEventListener("keydown", e => {
 });
 
 /* ==========================================================================
-   Music — one song for the site, optionally one per memory
+   The theme
+   --------------------------------------------------------------------------
+   Rather than ship an audio file, the page plays its own music. A slow chord
+   cycle — Dmaj7, Bm7, Gmaj7, Asus4 — on soft detuned sines, with occasional
+   music-box notes from the D pentatonic falling over the top, through a long
+   delay and a reverb built from a burst of decaying noise.
+
+   Because the notes are chosen as it goes, it never repeats and never loops
+   audibly. It is quiet by design: this is a room, not a performance.
+   ========================================================================== */
+
+function makeScore(){
+  let ctx = null, master = null, padBus = null, bellBus = null;
+  let timer = null, running = false;
+  let chordAt = 0, chordIx = 0, noteAt = 0;
+
+  const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+
+  const CHORDS = [
+    [50, 57, 61, 64, 69],   // Dmaj7
+    [47, 54, 59, 62, 66],   // Bm7
+    [43, 50, 55, 59, 62],   // Gmaj7
+    [45, 52, 57, 62, 64]    // Asus4
+  ];
+  // D major pentatonic sits happily over all four, so the melody can wander.
+  const NOTES = [74, 76, 78, 81, 83, 86, 88];
+
+  const CHORD_LEN = 9;    // how long one chord sounds
+  const CHORD_STEP = 7;   // so each overlaps the next by two seconds
+
+  function reverbBuffer(seconds, decay){
+    const n = Math.floor(ctx.sampleRate * seconds);
+    const buf = ctx.createBuffer(2, n, ctx.sampleRate);
+    for (let c = 0; c < 2; c++){
+      const d = buf.getChannelData(c);
+      for (let i = 0; i < n; i++) d[i] = (Math.random()*2 - 1) * Math.pow(1 - i/n, decay);
+    }
+    return buf;
+  }
+
+  function build(){
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    ctx = new AC();
+
+    master = ctx.createGain();
+    master.gain.value = 0;
+    master.connect(ctx.destination);
+
+    const verb = ctx.createConvolver();
+    verb.buffer = reverbBuffer(3.2, 2.4);
+    const verbGain = ctx.createGain();
+    verbGain.gain.value = 0.55;
+    verb.connect(verbGain).connect(master);
+
+    padBus = ctx.createGain();
+    padBus.gain.value = 0.85;
+    padBus.connect(master);
+    padBus.connect(verb);
+
+    // A long, soft echo under the melody — the space the notes fall into.
+    const delay = ctx.createDelay(1.5);
+    delay.delayTime.value = 0.42;
+    const fb = ctx.createGain();
+    fb.gain.value = 0.34;
+    const damp = ctx.createBiquadFilter();
+    damp.type = "lowpass";
+    damp.frequency.value = 2200;
+    delay.connect(damp).connect(fb).connect(delay);
+
+    bellBus = ctx.createGain();
+    bellBus.gain.value = 0.9;
+    bellBus.connect(master);
+    bellBus.connect(verb);
+    bellBus.connect(delay);
+    delay.connect(master);
+    return true;
+  }
+
+  function pad(midi, t, dur, level){
+    const a = ctx.createOscillator(), b = ctx.createOscillator();
+    a.type = "sine"; b.type = "sine";
+    a.frequency.value = hz(midi);
+    b.frequency.value = hz(midi) * 1.0035;        // the faintest beating
+
+    const g = ctx.createGain();
+    const f = ctx.createBiquadFilter();
+    f.type = "lowpass";
+    f.frequency.setValueAtTime(700, t);
+    f.frequency.linearRampToValueAtTime(1250, t + dur * 0.5);
+    f.frequency.linearRampToValueAtTime(700, t + dur);
+    f.Q.value = 0.5;
+
+    a.connect(g); b.connect(g); g.connect(f); f.connect(padBus);
+
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(level, t + 2.8);
+    g.gain.setValueAtTime(level, t + dur - 3.2);
+    g.gain.linearRampToValueAtTime(0.0001, t + dur);
+
+    a.start(t); b.start(t);
+    a.stop(t + dur + 0.1); b.stop(t + dur + 0.1);
+  }
+
+  function bell(midi, t, level){
+    const o = ctx.createOscillator(), h = ctx.createOscillator();
+    o.type = "triangle"; h.type = "sine";
+    o.frequency.value = hz(midi);
+    h.frequency.value = hz(midi) * 2.01;
+
+    const g = ctx.createGain(), gh = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(level, t + 0.014);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.8);
+    gh.gain.setValueAtTime(0.0001, t);
+    gh.gain.exponentialRampToValueAtTime(level * 0.3, t + 0.01);
+    gh.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+
+    o.connect(g).connect(bellBus);
+    h.connect(gh).connect(bellBus);
+    o.start(t); o.stop(t + 3);
+    h.start(t); h.stop(t + 1.3);
+  }
+
+  /* Looks a couple of seconds ahead and books whatever falls in that window —
+     the standard way to keep Web Audio in time without a busy loop. */
+  function tick(){
+    if (!running) return;
+    const ahead = ctx.currentTime + 2.5;
+
+    while (chordAt < ahead){
+      const chord = CHORDS[chordIx % CHORDS.length];
+      chord.forEach((m, i) => pad(m, chordAt, CHORD_LEN, i === 0 ? 0.058 : 0.040));
+      pad(chord[0] - 12, chordAt, CHORD_LEN, 0.036);     // a little warmth underneath
+      chordIx++;
+      chordAt += CHORD_STEP;
+    }
+
+    while (noteAt < ahead){
+      // Roughly a third of the slots stay empty, which is what keeps it calm.
+      if (Math.random() > 0.34){
+        const n = NOTES[Math.floor(Math.random() * NOTES.length)];
+        bell(n, noteAt, 0.070 + Math.random() * 0.035);
+        // Now and then a second note just behind it, like a turn of the handle.
+        if (Math.random() > 0.72){
+          const nn = NOTES[Math.floor(Math.random() * NOTES.length)];
+          bell(nn, noteAt + 0.28 + Math.random() * 0.2, 0.035);
+        }
+      }
+      noteAt += 1.3 + Math.random() * 2.6;
+    }
+  }
+
+  function fade(to, ms){
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), now);
+    master.gain.linearRampToValueAtTime(Math.max(0.0001, to), now + ms/1000);
+  }
+
+  return {
+    get supported(){ return Boolean(window.AudioContext || window.webkitAudioContext); },
+    get playing(){ return running; },
+
+    start(level){
+      if (!ctx && !build()) return false;
+      if (ctx.state === "suspended") ctx.resume();
+      if (!running){
+        running = true;
+        const t = ctx.currentTime + 0.15;
+        chordAt = t; noteAt = t + 2.5; chordIx = 0;
+        clearInterval(timer);     // a stop still winding down leaves one behind
+        tick();
+        timer = setInterval(tick, 600);
+      }
+      fade(level, 2600);
+      return true;
+    },
+
+    stop(){
+      if (!ctx || !running) return;
+      running = false;            // tick() stops booking at once, so the UI is honest
+      fade(0, 900);
+      // Let whatever is already sounding ring out before pulling the context.
+      setTimeout(() => {
+        if (running) return;      // started again in the meantime
+        clearInterval(timer);
+        timer = null;
+        if (ctx.state === "running") ctx.suspend();
+      }, 1000);
+    },
+
+    setLevel(level){ fade(level, 400); }
+  };
+}
+
+/* ==========================================================================
+   Music — the theme, or a song of your own, or one per memory
    ========================================================================== */
 
 const music = (() => {
@@ -1456,19 +1761,24 @@ const music = (() => {
   el.hidden = true;
   document.body.appendChild(el);
 
-  const TARGET = 0.55;
-  let current = null, wantsPlay = false, muted = false, fadeId = null;
+  const score = makeScore();
+  const LEVEL = clamp(Number(SETTINGS.music && SETTINGS.music.volume) || 0.5, 0, 1);
+  const TARGET = LEVEL * 0.9;
+  const THEME_LEVEL = LEVEL * 1.05;        // measured, to sit at a soft background level
 
   const norm = s => {
     if (!s || !s.url) return null;
     const start = parseClock(s.start) || 0;
     const end = parseClock(s.end);
-    return { url:s.url, title:s.title || "Our song", artist:s.artist || "",
+    return { kind:"file", url:s.url, title:s.title || "Our song", artist:s.artist || "",
              start, end: (end !== null && end > start) ? end : null };
   };
 
-  const globalSong = norm(SETTINGS.song);
-  current = globalSong;
+  const THEME = (SETTINGS.music && SETTINGS.music.builtIn !== false && score.supported)
+    ? { kind:"theme", title:(SETTINGS.music.title || "Our Theme"), artist:"" } : null;
+
+  const globalSource = norm(SETTINGS.song) || THEME;
+  let current = globalSource, wantsPlay = false, muted = false, fadeId = null, note = null;
 
   function fade(to, ms, done){
     if (fadeId) cancelAnimationFrame(fadeId);
@@ -1482,93 +1792,122 @@ const music = (() => {
     fadeId = requestAnimationFrame(step);
   }
 
-  function load(song, autoplay){
-    current = song;
+  const playingNow = () => current && (current.kind === "theme" ? score.playing : !el.paused);
+
+  function silence(){
+    score.stop();
+    if (!el.paused) fade(0, 350, () => el.pause());
+  }
+
+  function play(){
+    if (!current) return;
+    note = null;
+    wantsPlay = true;
+    if (current.kind === "theme"){
+      if (!el.paused) fade(0, 300, () => el.pause());
+      if (!score.start(muted ? 0.0001 : THEME_LEVEL)) note = "Not supported here";
+      paint();
+      return;
+    }
+    score.stop();
+    if (el.getAttribute("src") !== current.url){
+      el.src = current.url;
+      el.currentTime = current.start;
+    }
+    el.play()
+      .then(() => fade(muted ? 0 : TARGET, 700))
+      .catch(() => { note = "Tap to play"; paint(); });
+  }
+
+  function pause(){
+    wantsPlay = false;
+    silence();
     paint();
-    if (!song){ el.pause(); el.removeAttribute("src"); return; }
-    const swap = () => {
-      if (el.getAttribute("src") !== song.url){ el.src = song.url; }
-      el.currentTime = song.start;
-      if (!autoplay) return;
-      el.play().then(() => fade(muted ? 0 : TARGET, 700))
-               .catch(() => paint("Tap to play"));
-    };
-    if (el.getAttribute("src") && !el.paused) fade(0, 350, swap); else swap();
+  }
+
+  function switchTo(next){
+    if (!next || (current && next.kind === current.kind && next.url === current.url)) return;
+    const wasPlaying = wantsPlay;
+    current = next;
+    note = null;
+    if (wasPlaying) play(); else { silence(); paint(); }
   }
 
   el.addEventListener("timeupdate", () => {
-    if (!current) return;
+    if (!current || current.kind !== "file") return;
     // Loop the chosen stretch rather than running on into the rest of the track.
     if (current.end !== null && el.currentTime >= current.end) el.currentTime = current.start;
     paint();
   });
   el.addEventListener("loadedmetadata", () => {
-    if (current && current.start > 0 && Math.abs(el.currentTime - current.start) > 0.4)
-      el.currentTime = current.start;
+    if (current && current.kind === "file" && current.start > 0 &&
+        Math.abs(el.currentTime - current.start) > 0.4) el.currentTime = current.start;
     paint();
   });
   el.addEventListener("ended", () => {
-    if (!current) return;
+    if (!current || current.kind !== "file") return;
     el.currentTime = current.start;
     el.play().catch(() => {});
   });
   el.addEventListener("play",  () => paint());
   el.addEventListener("pause", () => paint());
-  el.addEventListener("error", () => { wantsPlay = false; paint("Could not play"); });
+  el.addEventListener("error", () => { note = "Could not play that file"; paint(); });
 
-  const ICON_PLAY  = `<svg viewBox="0 0 24 24" width="16" height="16" fill="#f0e0c4" style="margin-left:2px"><path d="M8 5.2v13.6L19 12z"/></svg>`;
-  const ICON_PAUSE = `<svg viewBox="0 0 24 24" width="16" height="16" fill="#f0e0c4"><rect x="7" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2"/></svg>`;
-  const ICON_ON    = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 9h3.5L12 5v14l-4.5-4H4zM15.5 8.6a4.6 4.6 0 0 1 0 6.8l1.3 1.3a6.4 6.4 0 0 0 0-9.4zM17.9 6.2a8 8 0 0 1 0 11.6l1.3 1.3a9.8 9.8 0 0 0 0-14.2z"/></svg>`;
-  const ICON_OFF   = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 9h3.5L12 5v14l-4.5-4H4zM16 9.5l1.4-1.4 2.1 2.1 2.1-2.1L23 9.5 20.9 11.6 23 13.7l-1.4 1.4-2.1-2.1-2.1 2.1L16 13.7l2.1-2.1z"/></svg>`;
+  const I_PLAY  = `<svg viewBox="0 0 24 24" width="16" height="16" fill="#f0e0c4" style="margin-left:2px"><path d="M8 5.2v13.6L19 12z"/></svg>`;
+  const I_PAUSE = `<svg viewBox="0 0 24 24" width="16" height="16" fill="#f0e0c4"><rect x="7" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2"/></svg>`;
+  const I_ON    = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 9h3.5L12 5v14l-4.5-4H4zM15.5 8.6a4.6 4.6 0 0 1 0 6.8l1.3 1.3a6.4 6.4 0 0 0 0-9.4zM17.9 6.2a8 8 0 0 1 0 11.6l1.3 1.3a9.8 9.8 0 0 0 0-14.2z"/></svg>`;
+  const I_OFF   = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 9h3.5L12 5v14l-4.5-4H4zM16 9.5l1.4-1.4 2.1 2.1 2.1-2.1L23 9.5 20.9 11.6 23 13.7l-1.4 1.4-2.1-2.1-2.1 2.1L16 13.7l2.1-2.1z"/></svg>`;
 
-  function paint(note){
+  const ring = $("#ringFill");
+
+  function paint(){
     const box = $("#player");
-    box.classList.toggle("show", Boolean(current && current.url));
+    box.classList.toggle("show", Boolean(current));
     if (!current) return;
-    const span = current.end !== null ? current.end - current.start
-               : (isFinite(el.duration) ? el.duration - current.start : null);
-    const pos = Math.max(0, el.currentTime - current.start);
-    $("#ringFill").style.strokeDashoffset = span && span > 0 ? String(1 - Math.min(1, pos/span)) : "1";
-    $("#ppIcon").innerHTML = el.paused ? ICON_PLAY : ICON_PAUSE;
-    $("#ppBtn").setAttribute("aria-label", (el.paused ? "Play " : "Pause ") + current.title);
+    const on = playingNow();
+    let liveSpan = null, livePos = 0;
+
+    if (current.kind === "theme"){
+      // Nothing to count down — the ring just breathes while the theme plays.
+      ring.style.strokeDashoffset = "0.25";
+      ring.classList.toggle("breathe", on);
+    } else {
+      ring.classList.remove("breathe");
+      const span = current.end !== null ? current.end - current.start
+                 : (isFinite(el.duration) ? el.duration - current.start : null);
+      const pos = Math.max(0, el.currentTime - current.start);
+      ring.style.strokeDashoffset = span && span > 0 ? String(1 - Math.min(1, pos/span)) : "1";
+      liveSpan = span; livePos = pos;
+    }
+
+    $("#ppIcon").innerHTML = on ? I_PAUSE : I_PLAY;
+    $("#ppBtn").setAttribute("aria-label", (on ? "Pause " : "Play ") + current.title);
     $("#songName").textContent = current.title;
     $("#songBy").textContent = note || current.artist ||
-      (span ? `${clock(pos)} / ${clock(span)}` : "♪");
-    $("#muteBtn").innerHTML = muted ? ICON_OFF : ICON_ON;
+      (current.kind === "theme" ? (on ? "playing softly" : "tap to play")
+       : (liveSpan ? `${clock(livePos)} / ${clock(liveSpan)}` : "\u266a"));
+    $("#muteBtn").innerHTML = muted ? I_OFF : I_ON;
     $("#muteBtn").setAttribute("aria-pressed", String(muted));
     $("#muteBtn").setAttribute("aria-label", muted ? "Unmute the music" : "Mute the music");
   }
 
-  $("#ppBtn").addEventListener("click", () => {
-    if (!current) return;
-    if (!el.paused){ wantsPlay = false; fade(0, 400, () => el.pause()); return; }
-    wantsPlay = true;
-    if (!el.getAttribute("src")){ load(current, true); return; }
-    el.play().then(() => fade(muted ? 0 : TARGET, 700)).catch(() => paint("Tap to play"));
-  });
+  $("#ppBtn").addEventListener("click", () => playingNow() ? pause() : play());
 
   $("#muteBtn").addEventListener("click", () => {
     muted = !muted;
-    fade(muted ? 0 : TARGET, 350);
+    if (current && current.kind === "theme") score.setLevel(muted ? 0.0001 : THEME_LEVEL);
+    else fade(muted ? 0 : TARGET, 350);
     paint();
   });
 
   paint();
 
   return {
-    get hasSong(){ return Boolean(current && current.url); },
-    start(){ if (current && current.url){ wantsPlay = true; load(current, true); } },
-    /* A memory with its own song takes over the room while it is open. */
-    forMemory(m){
-      const own = norm(m.song);
-      const next = own || globalSong;
-      if (!next || (current && next.url === current.url)) return;
-      load(next, wantsPlay);
-    },
-    restoreGlobal(){
-      if (!globalSong || (current && globalSong.url === current.url)) return;
-      load(globalSong, wantsPlay);
-    }
+    get hasSong(){ return Boolean(current); },
+    start(){ if (current) play(); },
+    /* A memory with a song of its own takes over the room while it is open. */
+    forMemory(m){ switchTo(norm(m.song) || globalSource); },
+    restoreGlobal(){ switchTo(globalSource); }
   };
 })();
 
