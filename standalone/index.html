@@ -51,13 +51,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   radial-gradient(95% 65% at 88% 8%,rgba(107,58,86,.40) 0%,transparent 60%),
   radial-gradient(130% 90% at 50% 108%,rgba(58,15,29,.55) 0%,transparent 62%),
   linear-gradient(178deg,var(--ground-1) 0%,var(--ground-0) 45%,#120810 100%)}
-.candle{z-index:-2;animation:breathe 14s ease-in-out infinite;background:
+.candle{z-index:-2;opacity:.88;transform:translateZ(0);background:
   radial-gradient(38% 26% at 22% 26%,rgba(227,201,160,.16) 0%,transparent 70%),
   radial-gradient(34% 24% at 80% 62%,rgba(196,129,143,.15) 0%,transparent 72%),
   radial-gradient(55% 32% at 50% 38%,rgba(107,58,86,.22) 0%,transparent 75%)}
 @keyframes breathe{0%,100%{opacity:.72}50%{opacity:1}}
 @keyframes drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-14px,0)}}
-.grain{z-index:-1;opacity:.4;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+.grain{z-index:-1;opacity:.22;transform:translateZ(0);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 
 /* --- type ----------------------------------------------------------------- */
 .display{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300}
@@ -74,8 +74,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media(min-width:640px){.mono-rule{width:3rem}}
 
 /* --- surfaces ------------------------------------------------------------- */
-.frost{background:linear-gradient(160deg,rgba(60,30,48,.62),rgba(30,14,26,.72));
-  backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);
+.frost{background:linear-gradient(160deg,rgba(58,29,47,.88),rgba(26,12,23,.93));
   border:1px solid rgba(227,201,160,.16);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 40px -22px rgba(0,0,0,.85)}
 .hairline{border:0;height:1px;background:linear-gradient(90deg,transparent,
@@ -165,7 +164,7 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 
 /* --- the story field ------------------------------------------------------ */
 #story{position:relative;padding:2rem 0 5rem}
-#fieldWrap{margin:2.25rem auto 0;width:100%;max-width:70rem;padding:0 2.25rem 0 .85rem}
+#fieldWrap{margin:2.25rem auto 0;width:100%;max-width:70rem;padding:0 2.7rem 0 .75rem}
 @media(min-width:1280px){#fieldWrap{padding:0 1.5rem}}
 #field{position:relative;padding-top:7rem}
 #yarn{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
@@ -209,7 +208,7 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 .memory{position:relative;opacity:0;transform:translateY(34px) scale(.975);
   transition:opacity .85s var(--silk),transform .85s var(--silk)}
 .memory.shown{opacity:1;transform:none}
-.wash{position:absolute;inset:-2.5rem;z-index:-1;border-radius:3rem;filter:blur(46px);
+.wash{position:absolute;inset:-1.5rem;z-index:-1;border-radius:2.5rem;filter:blur(26px);
   opacity:0;transition:opacity 1s}
 .memory.shown .wash{opacity:1}
 
@@ -278,12 +277,12 @@ select.chip option{background:#1d0f18;color:#f6efe6}
 .react .emo{font-size:1rem;line-height:1}
 
 /* the tie point, half on the paper and half off it */
-.knot{position:absolute;top:50%;transform:translateY(-50%);width:1.5rem;height:1.5rem;
+.knot{position:absolute;top:50%;transform:translateY(-50%);width:1.85rem;height:1.85rem;
   pointer-events:none;z-index:2}
-.knot[data-dir="right"]{right:-.75rem}
-.knot[data-dir="left"]{left:-.75rem}
-@media(min-width:1024px){.knot{width:2rem;height:2rem}
-  .knot[data-dir="right"]{right:-1rem}.knot[data-dir="left"]{left:-1rem}}
+.knot[data-dir="right"]{right:-.925rem}
+.knot[data-dir="left"]{left:-.925rem}
+@media(min-width:1024px){.knot{width:2.4rem;height:2.4rem}
+  .knot[data-dir="right"]{right:-1.2rem}.knot[data-dir="left"]{left:-1.2rem}}
 
 /* --- jump between memories without scrolling for them --------------------- */
 #rail{position:fixed;right:.9rem;top:50%;transform:translateY(-50%);z-index:35;
@@ -857,19 +856,18 @@ function sampleCubics(cs, step){
 }
 
 function plyPath(samples, amp, period, phase){
-  let d = "";
-  for (const s of samples){
+  const pts = samples.map(s => {
     const o = Math.sin(s.s/period*Math.PI*2 + phase) * amp;
-    d += `${d ? " L" : "M"} ${r2(s.x - s.ty*o)} ${r2(s.y + s.tx*o)}`;
-  }
-  return d;
+    return { x: s.x - s.ty*o, y: s.y + s.tx*o };   // offset along the normal
+  });
+  return cubicsToPath(splineCubics(pts, 0.5));
 }
 
 function withPlies(cubics, width){
-  const samples = sampleCubics(cubics, 2.5);
-  const period = width * 1.65;   // one full turn per one and a half cord-widths
-  const amp    = width * 0.23;   // wide enough to fill the cord edge to edge
-  return { d: cubicsToPath(cubics),
+  const period = width * 2.4;    // one full turn per a bit over two cord-widths
+  const amp    = width * 0.24;   // far enough for a ply to reach either edge
+  const samples = sampleCubics(cubics, period / 6.5);
+  return { d: cubicsToPath(cubics), period,
            plyA: plyPath(samples, amp, period, 0),
            plyB: plyPath(samples, amp, period, Math.PI) };
 }
@@ -888,7 +886,7 @@ function yarnSegment(a, b, bow, seed, width){
   const sign  = seed % 2 === 0 ? 1 : -1;
   const bowAmt = bow * (0.4 + 0.6*Math.abs(uy)) * sign * (0.82 + j(1)*0.36);
   const sag    = clamp(len*0.09, 6, 44) * (0.85 + j(2)*0.3);
-  const lead   = clamp(len*0.14, 18, 64);
+  const lead   = clamp(len*0.10, 16, 44);
 
   const p1 = { x: a.x + a.ex*lead + j(3)*7, y: a.y + a.ey*lead + j(4)*7 };
   const p3 = { x: b.x + b.ex*lead + j(5)*7, y: b.y - b.ey*lead + j(6)*7 };
@@ -1057,26 +1055,33 @@ function applyFilters(){
    ========================================================================== */
 
 function knotSVG(accent){
-  const rim = shade(accent, -0.55), lit = shade(accent, 0.40);
+  const rim = shade(accent, -0.42), mid = shade(accent, -0.14), lit = shade(accent, 0.46);
   const uid = "k" + Math.random().toString(36).slice(2,8);
+  // A knot is not a bow: it is the cord itself bunched where it passes through
+  // the card, with one turn of the tail wrapped across it. Drawn as a single
+  // soft bead the width of the thread and a bit over, so the thread arriving
+  // and the thread leaving plainly belong to it.
   return `<svg viewBox="0 0 32 32" width="100%" height="100%" style="overflow:visible">
-    <defs><radialGradient id="${uid}" cx="38%" cy="34%" r="72%">
-      <stop offset="0%" stop-color="${lit}"/><stop offset="55%" stop-color="${accent}"/>
+    <defs><radialGradient id="${uid}" cx="34%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="${lit}"/><stop offset="48%" stop-color="${accent}"/>
       <stop offset="100%" stop-color="${rim}"/></radialGradient></defs>
-    <ellipse cx="16" cy="16" rx="6.4" ry="6.4" fill="rgba(30,16,24,.45)"/>
-    <ellipse cx="16" cy="17.4" rx="6" ry="4.6" fill="rgba(20,10,18,.4)"/>
-    <circle cx="16" cy="16" r="6.4" fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".9"/>
-    <g stroke-linecap="round" fill="none">
-      <path d="M7.6 10.4 C 11 6.6, 20.6 6.4, 24.2 11" stroke="${rim}" stroke-width="6.4"/>
-      <path d="M7.6 10.4 C 11 6.6, 20.6 6.4, 24.2 11" stroke="${accent}" stroke-width="5"/>
-      <path d="M7.6 10.4 C 11 6.6, 20.6 6.4, 24.2 11" stroke="${lit}" stroke-width="1.7"
-            transform="translate(-.5,-1)" opacity=".8"/>
-      <path d="M8.4 21.8 C 11.6 25.6, 20.4 25.6, 23.6 21.4" stroke="${rim}" stroke-width="5.8"/>
-      <path d="M8.4 21.8 C 11.6 25.6, 20.4 25.6, 23.6 21.4" stroke="${accent}" stroke-width="4.4"/>
+
+    <!-- the eyelet it is pulled through, and the shadow it casts on the paper -->
+    <ellipse cx="16" cy="18.8" rx="8.4" ry="5" fill="rgba(22,11,18,.26)"/>
+
+    <!-- the bunched cord -->
+    <ellipse cx="16" cy="16" rx="9.2" ry="7.6" fill="${rim}"/>
+    <ellipse cx="15.7" cy="15.4" rx="8.1" ry="6.5" fill="url(#${uid})"/>
+
+    <!-- one turn of the tail, wrapped across it -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M8.6 20.4 C 12.5 16.2, 19.5 13.4, 24 11.2" stroke="${rim}" stroke-width="5" opacity=".4"/>
+      <path d="M8.6 20.4 C 12.5 16.2, 19.5 13.4, 24 11.2" stroke="${lit}" stroke-width="2.6" opacity=".4"/>
+      <path d="M9.4 11.8 C 13 15.6, 19 18.4, 23.6 20.6" stroke="${rim}" stroke-width="3.6" opacity=".22"/>
     </g>
-    <ellipse cx="16" cy="16" rx="5" ry="4.4" fill="${rim}"/>
-    <ellipse cx="16" cy="15.6" rx="4.2" ry="3.7" fill="url(#${uid})"/>
-    <ellipse cx="14.4" cy="14.2" rx="1.3" ry="1" fill="rgba(255,250,244,.6)"/>
+
+    <ellipse cx="12.6" cy="12.6" rx="2.6" ry="1.8" fill="rgba(255,250,244,.42)"
+             transform="rotate(-24 12.6 12.6)"/>
   </svg>`;
 }
 
@@ -1117,7 +1122,7 @@ function cardHTML(m, pos){
     <span class="wash" aria-hidden="true" style="background:${t.wash}"></span>
     ${motesHTML(m, m.index)}
     <article class="card" style="transform:rotate(${tilt}deg)">
-      <span class="knot" data-knot="${pos}" data-dir="right" aria-hidden="true">${knotSVG(t.accent)}</span>
+      <span class="knot" data-knot="${pos}" data-dir="right" aria-hidden="true">${knotSVG(t.yarn)}</span>
       <button class="open" type="button" data-open="${pos}" aria-label="Open the memory &quot;${esc(m.title)}&quot;">
         ${cover ? `<div class="frame">${mediaHTML(cover, { alt:m.title })}
           ${m.media.length > 1 ? `<span class="more">+${m.media.length - 1}</span>` : ""}</div>` : ""}
@@ -1204,8 +1209,8 @@ function offsetWithin(el, container){
 
 const FILTERS_DEFS = `
   <filter id="fibres" x="-6%" y="-6%" width="112%" height="112%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.045 0.09" numOctaves="3" seed="7" result="n"/>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="3.1" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.016 0.03" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
   <filter id="fuzz" x="-12%" y="-12%" width="124%" height="124%"><feGaussianBlur stdDeviation="3.4"/></filter>
   <filter id="soft" x="-12%" y="-12%" width="124%" height="124%"><feGaussianBlur stdDeviation="3"/></filter>`;
@@ -1215,6 +1220,10 @@ const FILTERS_DEFS = `
    strokes from a dark rim to a lit centre (which is what makes it look round),
    then the two plies, then the candlelight along the crest. */
 function strandHTML(id, geo, from, to, x1, y1, x2, y2, width, seg, duration, delay){
+  // One band per half-turn, the pair complementary so they tile the cord.
+  const T = geo.period || width * 2.4;
+  const band = (T * 0.66).toFixed(2);   // bands overlap a little, so the
+  const gap  = (T * 0.34).toFixed(2);   // base shows only as a thin crease
   const core = `gc${id}`, lift = `gl${id}`, deep = `gd${id}`, mask = `gm${id}`;
   const fib = LEAN ? "" : ` filter="url(#fibres)"`;
   const lc = `stroke-linecap="round" stroke-linejoin="round"`;
@@ -1235,22 +1244,25 @@ function strandHTML(id, geo, from, to, x1, y1, x2, y2, width, seg, duration, del
             stroke-dasharray="1" stroke-dashoffset="1" style="transition:${trans}"/>
     </mask>
   </defs>
-  <g mask="url(#${mask})">
-    <path d="${geo.d}" fill="none" stroke="rgba(12,5,10,.5)" stroke-width="${width*1.1}"
-          stroke-linecap="round" transform="translate(${(width*.28).toFixed(2)},${(width*.5).toFixed(2)})"
-          ${LEAN ? 'opacity=".4"' : 'filter="url(#soft)"'}/>
+  <g mask="url(#${mask})" data-seg="${seg}">
+    <path d="${geo.d}" fill="none" stroke="rgba(12,5,10,.3)" stroke-width="${width*1.15}"
+          stroke-linecap="round" opacity=".8"
+          transform="translate(${(width*.16).toFixed(2)},${(width*.3).toFixed(2)})"/>
     <g${fib}>
-      ${LEAN ? "" : `<path d="${geo.d}" fill="none" stroke="url(#${core})" stroke-width="${width*2.05}"
-            stroke-linecap="round" opacity=".2" filter="url(#fuzz)"/>`}
-      <path d="${geo.d}" fill="none" stroke="${shade(from,-.62)}" stroke-width="${width}" ${lc}/>
-      <path d="${geo.d}" fill="none" stroke="url(#${core})" stroke-width="${width*.82}" ${lc}
-            transform="translate(-${(width*.05).toFixed(2)},-${(width*.05).toFixed(2)})"/>
-      <path d="${geo.d}" fill="none" stroke="url(#${lift})" stroke-width="${width*.3}"
-            stroke-linecap="round" opacity=".75"
-            transform="translate(-${(width*.17).toFixed(2)},-${(width*.17).toFixed(2)})"/>
-      <path d="${geo.plyB}" fill="none" stroke="url(#${deep})" stroke-width="${width*.56}" ${lc} opacity=".9"/>
-      <path d="${geo.plyA}" fill="none" stroke="url(#${core})" stroke-width="${width*.54}" ${lc} opacity=".92"/>
-      <path d="${geo.plyA}" fill="none" stroke="rgba(255,248,242,.3)" stroke-width="${width*.13}" ${lc}
+      ${LEAN ? "" : `<path d="${geo.d}" fill="none" stroke="url(#${core})" stroke-width="${width*1.7}"
+            stroke-linecap="round" opacity=".13"/>`}
+      <path d="${geo.d}" fill="none" stroke="${shade(from,-.66)}" stroke-width="${width}" ${lc}/>
+      <path d="${geo.d}" fill="none" stroke="${shade(from,-.26)}" stroke-width="${width*.78}" ${lc}
+            transform="translate(-${(width*.04).toFixed(2)},-${(width*.04).toFixed(2)})"/>
+      <path d="${geo.plyB}" fill="none" stroke="url(#${core})" stroke-width="${width*.70}"
+            stroke-linecap="round" opacity=".82"
+            stroke-dasharray="${band} ${gap}" stroke-dashoffset="${(T*.75).toFixed(2)}"/>
+      <path d="${geo.plyA}" fill="none" stroke="url(#${core})" stroke-width="${width*.72}"
+            stroke-linecap="round"
+            stroke-dasharray="${band} ${gap}" stroke-dashoffset="${(T*.25).toFixed(2)}"/>
+      <path d="${geo.plyA}" fill="none" stroke="url(#${lift})" stroke-width="${width*.26}"
+            stroke-linecap="round" opacity=".5"
+            stroke-dasharray="${(T*.46).toFixed(2)} ${(T*.54).toFixed(2)}" stroke-dashoffset="${(T*.28).toFixed(2)}"
             transform="translate(-${(width*.11).toFixed(2)},-${(width*.11).toFixed(2)})"/>
     </g>
   </g>`;
@@ -1267,8 +1279,8 @@ function measure(){
 
   state.anchors = $$(".knot", listEl).map(el => {
     const p = offsetWithin(el, field);
-    const dir = el.dataset.dir === "left" ? -0.96 : 0.96;
-    return { x:p.x, y:p.y, ex:dir, ey:0.28 };
+    const dir = el.dataset.dir === "left" ? -0.88 : 0.88;
+    return { x:p.x, y:p.y, ex:dir, ey:0.47 };
   });
 
   const w = field.offsetWidth, h = field.offsetHeight;
@@ -1312,6 +1324,13 @@ function drawYarn(w, h){
   applyDraw();
 }
 
+/* A mask costs an offscreen buffer for as long as it is attached, and once a
+   length of thread has finished drawing it is doing nothing. Dropping it is
+   what keeps scrolling past a long story smooth. */
+function unmask(seg){
+  yarnEl.querySelectorAll(`g[data-seg="${seg}"]`).forEach(g => g.removeAttribute("mask"));
+}
+
 /* Reapplies how far the thread has got. Segments already finished are put
    back instantly; the one in flight animates. */
 function applyDraw(){
@@ -1322,7 +1341,9 @@ function applyDraw(){
     const seg = Number(p.dataset.seg);
     const should = seg < 0 ? state.revealed >= 0 : state.revealed >= seg;
     if (!should){ p.style.transition = "none"; p.style.strokeDashoffset = "1"; return; }
-    if (REDUCED || state.done.has(seg)){ p.style.transition = "none"; p.style.strokeDashoffset = "0"; return; }
+    if (REDUCED || state.done.has(seg)){
+      p.style.transition = "none"; p.style.strokeDashoffset = "0"; unmask(seg); return;
+    }
     p.style.strokeDashoffset = "1";
     requestAnimationFrame(() => requestAnimationFrame(() => { p.style.strokeDashoffset = "0"; }));
   });
@@ -1341,8 +1362,9 @@ yarnEl.addEventListener("transitionend", e => {
   const p = e.target;
   if (!p.classList || !p.classList.contains("reveal")) return;
   const seg = Number(p.dataset.seg);
-  if (seg < 0) return;               // the opening flourish leads nowhere new
   state.done.add(seg);
+  unmask(seg);
+  if (seg < 0) return;               // the opening flourish leads nowhere new
   reveal(seg + 1);
 });
 
