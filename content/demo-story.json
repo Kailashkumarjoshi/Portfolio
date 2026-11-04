@@ -1,0 +1,197 @@
+{
+  "settings": {
+    "id": "demo",
+    "initials": "K & R",
+    "hero_kicker": "a keepsake for two",
+    "hero_title": "Our Story",
+    "hero_subtitle": "Every memory, stitched to the next — one soft thread running all the way from the beginning to right now.",
+    "enter_label": "Begin Our Journey",
+    "footer_note": "Made slowly, and only for us.",
+    "entry_screen_enabled": true,
+    "default_sort": "story",
+    "global_song": null,
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  "events": [
+    {
+      "id": "demo-1",
+      "slug": "the-first-evening",
+      "title": "The First Evening",
+      "subtitle": "Before either of us knew what this was",
+      "event_date": "2019-11-08",
+      "date_label": null,
+      "chapter": "Beginnings",
+      "description": "Two separate threads, still unaware of each other. You laughed at something I didn't even mean to be funny, and I remember thinking — I'd like to hear that again. We stayed until the place emptied out, and neither of us said the obvious thing.",
+      "sort_order": 1,
+      "is_published": true,
+      "is_milestone": true,
+      "mood": "romantic",
+      "reaction_k": "🥹",
+      "reaction_r": "❤️",
+      "song": null,
+      "media": [
+        { "id": "m1", "event_id": "demo-1", "kind": "photo", "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1400&q=80", "storage_path": null, "caption": "The corner table.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 },
+        { "id": "m1b", "event_id": "demo-1", "kind": "photo", "url": "https://images.unsplash.com/photo-1507915135761-41a0a222c709?w=1400&q=80", "storage_path": null, "caption": "Walking back.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 1 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-2",
+      "slug": "the-long-phone-call",
+      "title": "The Long Phone Call",
+      "subtitle": "Three hours that felt like twenty minutes",
+      "event_date": "2019-12-02",
+      "date_label": null,
+      "chapter": "Beginnings",
+      "description": "Neither of us wanted to be the one to hang up, so we just… didn't. You fell asleep mid-sentence. I stayed on the line a while longer, listening, feeling ridiculous and completely certain at the same time.",
+      "sort_order": 2,
+      "is_published": true,
+      "is_milestone": false,
+      "mood": "emotional",
+      "reaction_k": "😌",
+      "reaction_r": "🫶",
+      "song": null,
+      "media": [
+        { "id": "m2", "event_id": "demo-2", "kind": "photo", "url": "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-3",
+      "slug": "the-kitchen-disaster",
+      "title": "The Kitchen Disaster",
+      "subtitle": "We do not talk about the risotto",
+      "event_date": "2020-03-14",
+      "date_label": null,
+      "chapter": "Learning Each Other",
+      "description": "It was supposed to be simple. It was not simple. We ate cereal at 11pm on the kitchen floor and you said it was the best meal you'd had all year, and the worst part is I think you meant it.",
+      "sort_order": 3,
+      "is_published": true,
+      "is_milestone": false,
+      "mood": "funny",
+      "reaction_k": "😂",
+      "reaction_r": "🤭",
+      "song": null,
+      "media": [
+        { "id": "m3", "event_id": "demo-3", "kind": "photo", "url": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1400&q=80", "storage_path": null, "caption": "Evidence.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-4",
+      "slug": "the-coast-road",
+      "title": "The Coast Road",
+      "subtitle": "No plan, half a tank, one playlist",
+      "event_date": "2020-08-21",
+      "date_label": null,
+      "chapter": "Learning Each Other",
+      "description": "We drove until the road ran out. You navigated badly on purpose so we'd take longer. The light went gold, then pink, then that deep blue where you can't tell the sea from the sky, and we pulled over and didn't say anything for a long time.",
+      "sort_order": 4,
+      "is_published": true,
+      "is_milestone": false,
+      "mood": "adventure",
+      "reaction_k": "😍",
+      "reaction_r": "✨",
+      "song": null,
+      "media": [
+        { "id": "m4", "event_id": "demo-4", "kind": "photo", "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 },
+        { "id": "m4b", "event_id": "demo-4", "kind": "photo", "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1400&q=80", "storage_path": null, "caption": "The turn-off we almost missed.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 1 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-5",
+      "slug": "the-quiet-year",
+      "title": "The Quiet Year",
+      "subtitle": "Small rooms, long mornings",
+      "event_date": "2021-02-06",
+      "date_label": null,
+      "chapter": "Home",
+      "description": "Nothing happened that year, and everything did. We learned how the other one takes their coffee, which side of the bed, which silences are fine. I think this is the part people forget to photograph.",
+      "sort_order": 5,
+      "is_published": true,
+      "is_milestone": false,
+      "mood": "peaceful",
+      "reaction_k": "🤍",
+      "reaction_r": "😌",
+      "song": null,
+      "media": [
+        { "id": "m5", "event_id": "demo-5", "kind": "photo", "url": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-6",
+      "slug": "the-question",
+      "title": "The Question",
+      "subtitle": "Asked badly, answered instantly",
+      "event_date": "2022-06-18",
+      "date_label": null,
+      "chapter": "Home",
+      "description": "I had a whole speech. I got about four words in before you said yes, which is very like you. Afterwards we couldn't stop laughing, and then we couldn't stop crying, and I have no idea which came first.",
+      "sort_order": 6,
+      "is_published": true,
+      "is_milestone": true,
+      "mood": "special",
+      "reaction_k": "🥹",
+      "reaction_r": "😭",
+      "song": null,
+      "media": [
+        { "id": "m6", "event_id": "demo-6", "kind": "photo", "url": "https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80", "storage_path": null, "caption": "Ten minutes after.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 },
+        { "id": "m6b", "event_id": "demo-6", "kind": "photo", "url": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 1 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-7",
+      "slug": "everyone-we-love",
+      "title": "Everyone We Love, In One Room",
+      "subtitle": "The loudest, best day",
+      "event_date": "2023-09-09",
+      "date_label": null,
+      "chapter": "Ours",
+      "description": "Someone's uncle gave a speech nobody understood. The cake leaned. It rained for eleven minutes and then stopped as if it had been asked to. Every single person we love was in one room at the same time, which had never happened before and may never happen again.",
+      "sort_order": 7,
+      "is_published": true,
+      "is_milestone": true,
+      "mood": "celebration",
+      "reaction_k": "🥂",
+      "reaction_r": "🥰",
+      "song": null,
+      "media": [
+        { "id": "m7", "event_id": "demo-7", "kind": "photo", "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 },
+        { "id": "m7b", "event_id": "demo-7", "kind": "photo", "url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1400&q=80", "storage_path": null, "caption": "The eleven minutes of rain.", "poster_url": null, "width": 1400, "height": 933, "sort_order": 1 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "demo-8",
+      "slug": "an-ordinary-tuesday",
+      "title": "An Ordinary Tuesday",
+      "subtitle": "Which is the whole point",
+      "event_date": null,
+      "date_label": "Still happening",
+      "chapter": "Ours",
+      "description": "No occasion. You were doing something unremarkable by the window and the light caught you and I thought: this. This is the one I'd keep. Not the big days — this one.",
+      "sort_order": 8,
+      "is_published": true,
+      "is_milestone": false,
+      "mood": "romantic",
+      "reaction_k": "❤️",
+      "reaction_r": "🌙",
+      "song": null,
+      "media": [
+        { "id": "m8", "event_id": "demo-8", "kind": "photo", "url": "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=1400&q=80", "storage_path": null, "caption": null, "poster_url": null, "width": 1400, "height": 933, "sort_order": 0 }
+      ],
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}
